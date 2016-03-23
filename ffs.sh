@@ -6,6 +6,7 @@ function pexit {
 }
 
 name=$1
+if [ -z "$name" ]; then echo "usage: $0 projectname"; exit 1 ; fi
 
 mkdir -vp $name/src/main/java/$name $name/src/main/resources $name/src/test/java/$name $name/src/test/resources
 pexit $? && echo creating $name/pom.xml && cat > $name/pom.xml <<EOF
