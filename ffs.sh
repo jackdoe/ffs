@@ -41,20 +41,20 @@ pexit $? && echo creating $name/pom.xml && cat > $name/pom.xml <<EOF
 
   <build>
     <plugins>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <phase>process-sources</phase>
-                            <goals>
-                                <goal>copy-dependencies</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${targetdirectory}</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-            </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${targetdirectory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
