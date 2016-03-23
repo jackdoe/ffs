@@ -1,5 +1,11 @@
-----
 ffs.sh - generate basic java project skeleton with rapidoid, junit and a fucking makfile
+* creates {name}/src/main/java/org/{name}
+* creates {name}/src/main/resources
+* creates {name}/src/test/java/org/{name}
+* creates {name}/src/test/resources
+* creates {name}/pom.xml { adds dependency on rapidoid and junit }
+* creates {name}/src/main/java/org/{name}/Main.java { starts rapidoid }
+* creates {name}/Makefile { runs mvn package && java -cp with port 5005 for remote debug }
 
 -----
 
