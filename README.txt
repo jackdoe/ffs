@@ -26,8 +26,12 @@ mkdir: created directory ‘example/src/test/resources’
 creating example/pom.xml
 creating example/src/main/java/org/example/Main.java
 creating example/Makefile
+jack@foo $
 jack@foo $ cd example && make
 mvn package && java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -cp target/dependency/*:target/example-app-0.1-SNAPSHOT.jar example.Main port=8080 address=127.0.0.1 cpus=2 workers=4 nodelay
+...
+...
+...
 ... bla bla bla ...
 Listening for transport dt_socket at address: 5005
 INFO | server | org.rapidoid.net.impl.AbstractLoop | Starting event loop | name=server
@@ -48,8 +52,7 @@ INFO | server3 | org.rapidoid.net.impl.AbstractLoop | Starting event loop | name
 INFO | server4 | org.rapidoid.insight.AbstractInsightful | Creating object | kind=pool | name=buffers | creatorThread=server4 | class=SynchronizedArrayPool
 INFO | server4 | org.rapidoid.insight.AbstractInsightful | Creating object | kind=pool | name=connections | creatorThread=server4 | class=SynchronizedArrayPool
 INFO | server4 | org.rapidoid.net.impl.AbstractLoop | Starting event loop | name=server4
-
-
+...
 ----
 
 TODO:
