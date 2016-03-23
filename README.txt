@@ -1,4 +1,5 @@
 ffs.sh - generate basic java project skeleton with rapidoid, junit and a fucking makfile
+
 * creates {name}/src/main/java/org/{name}
 * creates {name}/src/main/resources
 * creates {name}/src/test/java/org/{name}
