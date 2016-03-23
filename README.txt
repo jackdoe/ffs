@@ -1,11 +1,11 @@
 ffs.sh - generate basic java project skeleton with rapidoid, junit and a fucking makfile
 
-* creates {name}/src/main/java/org/{name}
+* creates {name}/src/main/java/{name}
 * creates {name}/src/main/resources
-* creates {name}/src/test/java/org/{name}
+* creates {name}/src/test/java/{name}
 * creates {name}/src/test/resources
 * creates {name}/pom.xml { adds dependency on rapidoid and junit }
-* creates {name}/src/main/java/org/{name}/Main.java { starts rapidoid }
+* creates {name}/src/main/java/{name}/Main.java { starts rapidoid }
 * creates {name}/Makefile { runs mvn package && java -cp with port 5005 for remote debug }
 
 -----
@@ -15,16 +15,14 @@ mkdir: created directory ‘example’
 mkdir: created directory ‘example/src’
 mkdir: created directory ‘example/src/main’
 mkdir: created directory ‘example/src/main/java’
-mkdir: created directory ‘example/src/main/java/org’
-mkdir: created directory ‘example/src/main/java/org/example’
+mkdir: created directory ‘example/src/main/java/example’
 mkdir: created directory ‘example/src/main/resources’
 mkdir: created directory ‘example/src/test’
 mkdir: created directory ‘example/src/test/java’
-mkdir: created directory ‘example/src/test/java/org’
-mkdir: created directory ‘example/src/test/java/org/example’
+mkdir: created directory ‘example/src/test/java/example’
 mkdir: created directory ‘example/src/test/resources’
 creating example/pom.xml
-creating example/src/main/java/org/example/Main.java
+creating example/src/main/java/example/Main.java
 creating example/Makefile
 jack@foo $
 jack@foo $ cd example && make

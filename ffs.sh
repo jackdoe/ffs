@@ -7,7 +7,7 @@ function pexit {
 
 name=$1
 
-mkdir -vp $name/src/main/java/org/$name $name/src/main/resources $name/src/test/java/org/$name $name/src/test/resources
+mkdir -vp $name/src/main/java/$name $name/src/main/resources $name/src/test/java/$name $name/src/test/resources
 pexit $? && echo creating $name/pom.xml && cat > $name/pom.xml <<EOF
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -60,7 +60,7 @@ pexit $? && echo creating $name/pom.xml && cat > $name/pom.xml <<EOF
 </project>
 EOF
 
-pexit $? && echo creating $name/src/main/java/org/$name/Main.java && cat > $name/src/main/java/org/$name/Main.java <<EOF
+pexit $? && echo creating $name/src/main/java/$name/Main.java && cat > $name/src/main/java/$name/Main.java <<EOF
 package $name;
 import org.rapidoid.data.*;
 import org.rapidoid.http.fast.*;
