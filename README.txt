@@ -5,6 +5,7 @@ ffs.sh - generate basic java project skeleton with finatra
 * creates {name}/src/test/java/{name}
 * creates {name}/src/test/resources
 * creates {name}/build.sbt { with finatra }
+* creates {name}/project/plugins.sbt { with sbt-revolver }
 * creates {name}/src/main/java/{name}/Main.java { starts finatra }
 * creates {name}/src/main/java/{name}/MainServer.java { sets up controller and basic response}
 

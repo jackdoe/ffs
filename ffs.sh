@@ -8,7 +8,7 @@ function pexit {
 name=$1
 if [ -z "$name" ]; then echo "usage: $0 projectname"; exit 1 ; fi
 
-mkdir -vp $name/src/main/java/$name $name/src/main/resources $name/src/test/java/$name $name/src/test/resources
+mkdir -vp $name/src/main/java/$name $name/src/main/resources $name/src/test/java/$name $name/src/test/resources $name/project
 pexit $? && echo creating $name/build.sbt && cat > $name/build.sbt <<EOF
 name := "$name"
 organization := "$name"
@@ -63,6 +63,11 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.3.12" % "test",
   "com.novocode" % "junit-interface" % "0.11" % Test)
 EOF
+
+pexit $? && echo creating $name/project/plugins.sbt && cat > $name/project/plugins.sbt <<EOF
+addSbtPlugin("io.spray" % "sbt-revolver" % "0.8.0")
+EOF
+
 pexit $? && echo creating $name/src/main/java/$name/Main.java && cat > $name/src/main/java/$name/Main.java <<EOF
 package $name;
 public class Main {
