@@ -51,7 +51,7 @@ pexit $? && echo creating $name/pom.xml && cat > $name/pom.xml <<EOF
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>${targetdirectory}</outputDirectory>
+              <outputDirectory>\${targetdirectory}</outputDirectory>
             </configuration>
           </execution>
         </executions>
