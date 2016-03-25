@@ -25,7 +25,11 @@ javacOptions ++= Seq(
   "-Xlint:unchecked"
 )
 
-mainClass in (Compile, packageBin) := Some("$name.Main")
+val projectMainClass = "$name.Main"
+
+mainClass in (Compile, run) := Some(projectMainClass)
+mainClass in (Compile, packageBin) := Some(projectMainClass)
+
 
 lazy val versions = new {
   val finatra = "2.1.5"
