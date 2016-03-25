@@ -121,3 +121,18 @@ public class MainServer extends JavaHttpServer {
     }
 }
 EOF
+
+pexit $? && echo creating $name/src/test/java/$name/MainTest.java && cat > $name/src/test/java/$name/MainTest.java <<EOF
+package $name;
+import org.junit.*;
+import static org.junit.Assert.assertEquals;
+
+public class MainTest {
+    @Test
+    public void testFail() throws Exception {
+        assertEquals(true, false);
+    }
+}
+
+EOF
+pexit $?
