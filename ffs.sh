@@ -12,8 +12,8 @@ mkdir -vp $name/src/main/java/$name $name/src/main/resources $name/src/test/java
 pexit $? && echo creating $name/build.sbt && cat > $name/build.sbt <<EOF
 name := "$name"
 organization := "$name"
-version := "2.1.5"
-scalaVersion := "2.11.7"
+version := "0.1"
+scalaVersion := "2.11.8"
 parallelExecution in ThisBuild := false
 publishMavenStyle := true
 crossPaths := false
