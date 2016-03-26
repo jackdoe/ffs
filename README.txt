@@ -1,5 +1,8 @@
 ffs.sh - generate basic java project skeleton with finatra
 
+in other words: this is ragecoded project skeleton generator.
+(turns out the main reason I was using go, was because it is too anoying to start new java projects)
+
 * creates {name}/src/main/java/{name}
 * creates {name}/src/main/resources
 * creates {name}/src/test/java/{name}
@@ -54,3 +57,6 @@ accept arguments with dependencies, and automatically write into build.sbt
 file based on something like:
 
 curl -s 'http://search.maven.org/solrsearch/select?q=rapidoid&rows=1&wt=json' | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["response"]["docs"][0]'
+
+----
+PS: tried it out for couple of microservices already, and it kicks ass!
