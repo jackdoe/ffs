@@ -70,6 +70,14 @@ EOF
 
 pexit $? && echo creating $name/project/plugins.sbt && cat > $name/project/plugins.sbt <<EOF
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.8.0")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.2")
+EOF
+
+pexit $? && echo creating $name/assembly.sbt && cat > $name/assembly.sbt <<EOF
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
+  case x => MergeStrategy.last
+}
 EOF
 
 pexit $? && echo creating $name/src/main/java/$name/Main.java && cat > $name/src/main/java/$name/Main.java <<EOF
@@ -83,13 +91,9 @@ EOF
 
 pexit $? && echo creating $name/src/main/java/$name/MainServer.java && cat > $name/src/main/java/$name/MainServer.java <<EOF
 package $name;
-import java.util.Collection;
-import com.google.common.collect.ImmutableList;
-import com.google.inject.Module;
 import com.twitter.finatra.http.JavaHttpServer;
 import com.twitter.finatra.http.filters.CommonFilters;
 import com.twitter.finatra.http.routing.HttpRouter;
-import javax.inject.Inject;
 import com.twitter.finatra.http.JavaController;
 
 public class MainServer extends JavaHttpServer {
@@ -127,10 +131,23 @@ package $name;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.twitter.finagle.http.Request;
+import com.twitter.finagle.http.Response;
+import com.twitter.finagle.http.Status;
+import com.twitter.finatra.http.test.EmbeddedHttpServer;
+import static com.twitter.finatra.httpclient.RequestBuilder.*;
 public class MainTest {
+    private EmbeddedHttpServer server = new EmbeddedHttpServer(new MainServer());
+
     @Test
-    public void testFail() throws Exception {
-        assertEquals(true, false);
+    public void testGoodbyeEndpoint() {
+        Request request = get("/goodbye");
+        Response response = server.httpRequest(request);
+        assertEquals(Status.Ok(), response.status());
+        assertEquals("{\"name\":\"guest\",\"message\":\"cya\",\"code\":123}", response.contentString());
     }
 }
 
