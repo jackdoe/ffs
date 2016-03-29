@@ -79,6 +79,51 @@ assemblyMergeStrategy in assembly := {
   case x => MergeStrategy.last
 }
 EOF
+pexit $? && echo creating $name/src/main/resources/logback.xml && cat > $name/src/main/resources/logback.xml <<EOF
+<configuration>
+
+  <!-- ===================================================== -->
+  <!-- Secondary Appenders -->
+  <!-- ===================================================== -->
+
+  <!-- Service Log (Rollover daily/50MB) -->
+  <appender name="SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>service.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>service-%d{yyyy-MM-dd}.%i</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+          class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>50MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date %.-3level %-16X{traceId} %-25logger{0} %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- ===================================================== -->
+  <!-- Primary Async Appenders -->
+  <!-- ===================================================== -->
+
+  <appender name="ASYNC-SERVICE" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="SERVICE"/>
+  </appender>
+
+  <!-- ===================================================== -->
+  <!-- Package Config -->
+  <!-- ===================================================== -->
+
+  <!-- Root Config -->
+  <root level="warn">
+    <appender-ref ref="ASYNC-SERVICE"/>
+  </root>
+
+  <!-- Per-Package Config -->
+  <logger name="com.twitter" level="info"/>
+  <logger name="$name" level="info"/>
+</configuration>
+EOF
+
 
 pexit $? && echo creating $name/src/main/java/$name/Main.java && cat > $name/src/main/java/$name/Main.java <<EOF
 package $name;
