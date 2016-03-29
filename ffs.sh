@@ -43,6 +43,8 @@ resolvers ++= Seq(
 )
 Revolver.enableDebugging(port = 5005, suspend = false)
 libraryDependencies ++= Seq(
+  "org.scala-lang.modules" % "scala-java8-compat_2.11" % "0.7.0",
+
   "com.twitter.finatra" %% "finatra-http" % versions.finatra,
   "com.twitter.finatra" %% "finatra-httpclient" % versions.finatra,
   "ch.qos.logback" % "logback-classic" % versions.logback,
@@ -140,7 +142,14 @@ import com.twitter.finatra.http.JavaHttpServer;
 import com.twitter.finatra.http.filters.CommonFilters;
 import com.twitter.finatra.http.routing.HttpRouter;
 import com.twitter.finatra.http.JavaController;
-
+import com.google.inject.Singleton;
+import com.twitter.finagle.Service;
+import com.twitter.finagle.SimpleFilter;
+import com.twitter.finagle.http.Request;
+import com.twitter.finagle.http.Response;
+import static scala.compat.java8.JFunction.*;
+import scala.runtime.BoxedUnit;
+import com.twitter.util.Future;
 public class MainServer extends JavaHttpServer {
     public static class MainController extends JavaController {
         public class GoodbyeResponse {
@@ -162,11 +171,28 @@ public class MainServer extends JavaHttpServer {
     }
 
 
+
+    @Singleton
+    public static class WatchFilter extends SimpleFilter<Request, Response> {
+        @Override public Future<Response> apply(Request req, Service<Request, Response> srv) {
+            long t0 = System.currentTimeMillis();
+            return srv.apply(req).onSuccess(func(response -> {
+                System.out.println("[SUCCESS] " + req.getUri() + " took:" + (System.currentTimeMillis() - t0));
+                return BoxedUnit.UNIT;
+            })).onFailure(func(response -> {
+                response.getMessage();
+                System.out.println("[FAIL] " + req.getUri() + " took:" + (System.currentTimeMillis() - t0) + ", error:" + response.getMessage());
+                return BoxedUnit.UNIT;
+            }));
+        }
+    }
+
     @Override
     public void configureHttp(HttpRouter httpRouter) {
         httpRouter
-            .filter(CommonFilters.class)
-            .add(MainController.class);
+                .filter(CommonFilters.class)
+                .filter(MainServer.WatchFilter.class)
+                .add(MainController.class);
     }
 }
 EOF
