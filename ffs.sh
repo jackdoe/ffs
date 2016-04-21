@@ -9,6 +9,20 @@ name=$1
 if [ -z "$name" ]; then echo "usage: $0 projectname"; exit 1 ; fi
 
 mkdir -vp $name/src/main/java/$name $name/src/main/resources $name/src/test/java/$name $name/src/test/resources $name/project
+pexit $? && echo creating $name/.gitignore && cat > $name/.gitignore <<EOF
+*.class
+*.swp
+.idea
+*.iml
+target/
+.project
+.settings
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
+EOF
 
 pexit $? && echo creating $name/pom.xml && cat > $name/pom.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
